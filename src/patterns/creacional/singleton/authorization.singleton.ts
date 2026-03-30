@@ -37,7 +37,6 @@ class AuthorizationManager {
   }
 }
 
-// ─── Demo ────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('       SINGLETON — Authorization Manager    ');
 console.log('═══════════════════════════════════════════\n');
@@ -54,7 +53,6 @@ console.log(`[AUTH] ¿Tiene permiso "delete"? → ${auth1.hasPermission('delete'
 console.log(`[AUTH] ¿Tiene permiso "admin"?  → ${auth1.hasPermission('admin')}`);
 console.log();
 
-// auth2 apunta a la misma instancia
 console.log(`[AUTH] Usuario desde auth2: "${auth2.getUser()}"`);
 auth2.logout();
 console.log(`[AUTH] Usuario después del logout desde auth2: ${auth1.getUser()}`);

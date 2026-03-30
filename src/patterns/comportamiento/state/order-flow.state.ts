@@ -1,6 +1,5 @@
 // src/patterns/comportamiento/state/order-flow.state.ts
 
-// ── Interfaz de estado ────────────────────────────────────────────────────────
 interface OrderState {
   confirm(): void;
   pay(): void;
@@ -10,7 +9,6 @@ interface OrderState {
   readonly stateName: string;
 }
 
-// ── Contexto ──────────────────────────────────────────────────────────────────
 class Order {
   private state: OrderState;
   readonly id: string;
@@ -35,7 +33,6 @@ class Order {
   cancel():  void { this.state.cancel();  }
 }
 
-// ── Estados concretos ─────────────────────────────────────────────────────────
 class DraftState implements OrderState {
   readonly stateName = 'Borrador';
   constructor(private readonly order: Order) {}
@@ -102,7 +99,6 @@ class CancelledState implements OrderState {
   cancel():  void { console.log('  [STATE]     La orden ya está cancelada'); }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       STATE — Order Flow                      ');
 console.log('══════════════════════════════════════════════\n');

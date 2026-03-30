@@ -4,7 +4,6 @@ interface StockObserver {
   update(symbol: string, price: number, previousPrice: number): void;
 }
 
-// ── StockMarket (sujeto observable) ──────────────────────────────────────────
 class StockMarket {
   private observers: StockObserver[] = [];
   private prices: Map<string, number> = new Map();
@@ -27,7 +26,6 @@ class StockMarket {
   }
 }
 
-// ── Observers ─────────────────────────────────────────────────────────────────
 class AlertObserver implements StockObserver {
   constructor(
     private readonly symbol: string,
@@ -62,7 +60,6 @@ class PortfolioObserver implements StockObserver {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       OBSERVER — Stock Market                 ');
 console.log('══════════════════════════════════════════════\n');

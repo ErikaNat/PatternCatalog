@@ -2,14 +2,12 @@
 
 type AccessRole = 'ADMIN' | 'EDITOR' | 'USER';
 
-// ── Interfaz ──────────────────────────────────────────────────────────────────
 interface DocumentService {
   read(docId: string): string;
   write(docId: string, content: string): void;
   delete(docId: string): void;
 }
 
-// ── Implementación real ───────────────────────────────────────────────────────
 class RealDocumentService implements DocumentService {
   private docs: Map<string, string> = new Map([
     ['doc-1', 'Contenido del documento 1'],
@@ -33,7 +31,6 @@ class RealDocumentService implements DocumentService {
   }
 }
 
-// ── Proxy de control de acceso ────────────────────────────────────────────────
 const PERMISSIONS: Record<string, AccessRole[]> = {
   read:   ['ADMIN', 'EDITOR', 'USER'] as unknown as AccessRole[],
   write:  ['ADMIN', 'EDITOR'] as unknown as AccessRole[],
@@ -72,14 +69,12 @@ class AccessControlProxy implements DocumentService {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('     PROXY — Access Control Proxy           ');
 console.log('═══════════════════════════════════════════\n');
 
 const realDoc = new RealDocumentService();
 
-// ADMIN: acceso total
 console.log('── Usuario: ADMIN ────────────────────────────────────');
 const adminProxy: DocumentService = new AccessControlProxy(realDoc, 'ADMIN');
 adminProxy.read('doc-1');
@@ -87,7 +82,6 @@ adminProxy.write('doc-1', 'Contenido actualizado por admin');
 adminProxy.delete('doc-2');
 console.log();
 
-// EDITOR: puede leer y escribir, no eliminar
 console.log('── Usuario: EDITOR ───────────────────────────────────');
 const editorProxy: DocumentService = new AccessControlProxy(realDoc, 'EDITOR');
 editorProxy.read('doc-1');
@@ -95,7 +89,6 @@ editorProxy.write('doc-1', 'Edición del editor');
 editorProxy.delete('doc-1'); // denegado
 console.log();
 
-// USER: solo lectura
 console.log('── Usuario: USER ─────────────────────────────────────');
 const userProxy: DocumentService = new AccessControlProxy(realDoc, 'USER');
 userProxy.read('doc-1');

@@ -1,13 +1,11 @@
 // src/patterns/comportamiento/command/text-editor.command.ts
 
-// ── Interfaz Command ──────────────────────────────────────────────────────────
 interface Command {
   execute(): void;
   undo(): void;
   readonly description: string;
 }
 
-// ── Receptor: TextEditor ──────────────────────────────────────────────────────
 class TextEditor {
   private content: string = '';
 
@@ -35,7 +33,6 @@ class TextEditor {
   }
 }
 
-// ── Comandos concretos ────────────────────────────────────────────────────────
 class InsertTextCommand implements Command {
   readonly description: string;
   constructor(
@@ -97,14 +94,12 @@ class FormatCommand implements Command {
     console.log(`  [CMD]    ${this.description}`);
   }
   undo(): void {
-    // Reemplaza el texto formateado por el original
     this.editor.delete(this.start, this.formattedLength);
     this.editor.insert(this.originalText, this.start);
     console.log(`  [CMD]     Deshecho: ${this.description}`);
   }
 }
 
-// ── Historial ─────────────────────────────────────────────────────────────────
 class CommandHistory {
   private stack: Command[] = [];
   private redoStack: Command[] = [];
@@ -123,7 +118,6 @@ class CommandHistory {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       COMMAND — Text Editor                   ');
 console.log('══════════════════════════════════════════════\n');

@@ -57,12 +57,10 @@ class QueryBuilder {
   }
 }
 
-// ─── Demo ────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('           BUILDER — Query Builder          ');
 console.log('═══════════════════════════════════════════\n');
 
-// Query compleja
 const query1 = new QueryBuilder()
   .from('orders')
   .select('id', 'customer_id', 'total', 'status', 'created_at')
@@ -78,7 +76,6 @@ console.log(`   SQL:    ${query1.sql}`);
 console.log(`   Params: [${query1.params.map(p => JSON.stringify(p)).join(', ')}]`);
 console.log();
 
-// Query simple
 const query2 = new QueryBuilder()
   .from('users')
   .select('email', 'role')
@@ -91,7 +88,6 @@ console.log(`   SQL:    ${query2.sql}`);
 console.log(`   Params: [${query2.params.map(p => JSON.stringify(p)).join(', ')}]`);
 console.log();
 
-// Caso de error: sin tabla
 console.log('[TEST] Query sin tabla definida...');
 try {
   new QueryBuilder().select('id').build();

@@ -1,6 +1,5 @@
 // src/patterns/comportamiento/repository/async-repository.ts
 
-// ── Entidad ───────────────────────────────────────────────────────────────────
 interface User {
   id: string;
   email: string;
@@ -12,7 +11,6 @@ interface User {
   can(action: string): boolean;
 }
 
-// ── Interfaz async del repositorio ────────────────────────────────────────────
 interface AsyncUserRepository {
   save(user: Omit<User, 'id' | 'createdAt' | 'authenticate' | 'can'>): Promise<User>;
   findById(id: string): Promise<User | undefined>;
@@ -21,7 +19,6 @@ interface AsyncUserRepository {
   delete(id: string): Promise<boolean>;
 }
 
-// ── Helper para crear usuarios con métodos ──────────────────────────────────
 function createUser(data: Omit<User, 'authenticate' | 'can'>): User {
   return {
     ...data,
@@ -34,7 +31,6 @@ function createUser(data: Omit<User, 'authenticate' | 'can'>): User {
   };
 }
 
-// ── Implementación async con latencia simulada ────────────────────────────────
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -46,7 +42,7 @@ class AsyncInMemoryUserRepository implements AsyncUserRepository {
     await delay(30); // simula latencia de escritura
     const existing = await this.findByEmail(data.email);
     if (existing) {
-      throw new Error(`❌ Email "${data.email}" ya registrado`);
+      throw new Error(` Email "${data.email}" ya registrado`);
     }
     const id = `u-${Date.now()}`;
     const user = createUser({ ...data, id, createdAt: new Date() });
@@ -79,7 +75,6 @@ class AsyncInMemoryUserRepository implements AsyncUserRepository {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 async function main(): Promise<void> {
   console.log('══════════════════════════════════════════════');
   console.log('       REPOSITORY — Async Repository           ');
@@ -89,28 +84,28 @@ async function main(): Promise<void> {
 
   console.log('── Guardar usuarios (async/await) ─────────────────────');
   const alice = await repo.save({ name: 'Alice López',  email: 'alice@empresa.com', password: 'pass123', role: 'admin' });
-  console.log(`[ASYNC-REPO] ✅ Guardado: ${alice.name} | createdAt: ${alice.createdAt.toISOString()}`);
+  console.log(`[ASYNC-REPO]  Guardado: ${alice.name} | createdAt: ${alice.createdAt.toISOString()}`);
 
   const bob = await repo.save({ name: 'Bob Martínez', email: 'bob@empresa.com', password: 'pass123', role: 'user' });
-  console.log(`[ASYNC-REPO] ✅ Guardado: ${bob.name} | createdAt: ${bob.createdAt.toISOString()}`);
+  console.log(`[ASYNC-REPO]  Guardado: ${bob.name} | createdAt: ${bob.createdAt.toISOString()}`);
 
   await repo.save({ name: 'Carol Jiménez', email: 'carol@empresa.com', password: 'pass123', role: 'manager' });
-  console.log(`[ASYNC-REPO] ✅ Guardado: Carol Jiménez`);
+  console.log(`[ASYNC-REPO]  Guardado: Carol Jiménez`);
 
   console.log('\n── Buscar por ID ──────────────────────────────────────');
   const found = await repo.findById('u-1');
-  console.log(`[ASYNC-REPO] 👤 findById("u-1"): ${found?.name ?? 'no encontrado'}`);
+  console.log(`[ASYNC-REPO]  findById("u-1"): ${found?.name ?? 'no encontrado'}`);
 
   const notFound = await repo.findById('u-999');
-  console.log(`[ASYNC-REPO] 🔍 findById("u-999"): ${notFound ?? 'no encontrado'}`);
+  console.log(`[ASYNC-REPO]  findById("u-999"): ${notFound ?? 'no encontrado'}`);
 
   console.log('\n── Buscar por email ───────────────────────────────────');
   const byEmail = await repo.findByEmail('bob@empresa.com');
-  console.log(`[ASYNC-REPO] 📧 findByEmail: ${byEmail?.name} [${byEmail?.role}]`);
+  console.log(`[ASYNC-REPO]  findByEmail: ${byEmail?.name} [${byEmail?.role}]`);
 
   console.log('\n── Buscar por rol ─────────────────────────────────────');
   const users = await repo.findByRole('user');
-  console.log(`[ASYNC-REPO] 📋 Usuarios con rol "user": ${users.map((u) => u.name).join(', ')}`);
+  console.log(`[ASYNC-REPO]  Usuarios con rol "user": ${users.map((u) => u.name).join(', ')}`);
 
   console.log('\n── Email duplicado ────────────────────────────────────');
   try {
@@ -121,9 +116,9 @@ async function main(): Promise<void> {
 
   console.log('\n── Eliminar ───────────────────────────────────────────');
   const del = await repo.delete('u-2');
-  console.log(`[ASYNC-REPO] ✅ delete("u-2"): ${del}`);
+  console.log(`[ASYNC-REPO]  delete("u-2"): ${del}`);
   const afterDelete = await repo.findById('u-2');
-  console.log(`[ASYNC-REPO] 🔍 findById("u-2") tras borrar: ${afterDelete ?? 'no encontrado'}`);
+  console.log(`[ASYNC-REPO]  findById("u-2") tras borrar: ${afterDelete ?? 'no encontrado'}`);
 }
 
 main().catch((err) => console.error('Error:', err));

@@ -2,9 +2,7 @@
 
 interface RawRecord { id: number; name: string; value: number; active: boolean; }
 
-// ── Clase abstracta con Template Method ───────────────────────────────────────
 abstract class DataExporter {
-  // Template Method
   export(records: RawRecord[]): void {
     console.log(`\n[TEMPLATE]    Iniciando exportación: ${this.formatName()}`);
     this.connect();
@@ -37,7 +35,6 @@ abstract class DataExporter {
   }
 }
 
-// ── Subclase 1: CSV Exporter ──────────────────────────────────────────────────
 class CSVExporter extends DataExporter {
   protected formatName(): string { return 'CSV'; }
 
@@ -49,7 +46,6 @@ class CSVExporter extends DataExporter {
   }
 }
 
-// ── Subclase 2: JSON Exporter ─────────────────────────────────────────────────
 class JSONExporter extends DataExporter {
   protected formatName(): string { return 'JSON'; }
 
@@ -59,7 +55,6 @@ class JSONExporter extends DataExporter {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       TEMPLATE METHOD — Data Exporter         ');
 console.log('══════════════════════════════════════════════');

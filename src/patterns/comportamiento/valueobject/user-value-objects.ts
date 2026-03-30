@@ -1,6 +1,5 @@
 // src/patterns/comportamiento/valueobject/user-value-objects.ts
 
-// ── Value Object: Email ───────────────────────────────────────────────────────
 class Email {
   private readonly value: string;
   private static readonly REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,7 +17,6 @@ class Email {
   equals(other: Email): boolean { return this.value === other.value; }
 }
 
-// ── Value Object: Password ────────────────────────────────────────────────────
 class Password {
   private readonly hashed: string;
 
@@ -26,7 +24,6 @@ class Password {
     if (plain.length < 8) {
       throw new Error(`   Contraseña muy corta: mínimo 8 caracteres`);
     }
-    // Hash simplificado (en producción usarías bcrypt)
     this.hashed = Password.simpleHash(plain);
   }
 
@@ -46,7 +43,6 @@ class Password {
   getHash(): string { return this.hashed; }
 }
 
-// ── Value Object: Role ────────────────────────────────────────────────────────
 type RoleType = 'ADMIN' | 'MANAGER' | 'USER';
 
 class Role {
@@ -71,7 +67,6 @@ class Role {
   equals(other: Role): boolean { return this.value === other.value; }
 }
 
-// ── Entidad: User (usa los 3 Value Objects) ───────────────────────────────────
 class User {
   readonly id: string;
   readonly email: Email;
@@ -98,7 +93,6 @@ class User {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       VALUE OBJECT — User Value Objects       ');
 console.log('══════════════════════════════════════════════\n');

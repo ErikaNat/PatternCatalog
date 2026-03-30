@@ -1,5 +1,4 @@
 // src/patterns/estructural/facade/index.ts
-// Sirve para procesar un orden con una sola llamada
 
 export const FACADE_PATTERN = {
   id: 'facade',

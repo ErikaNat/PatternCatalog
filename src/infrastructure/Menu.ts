@@ -146,6 +146,5 @@ export class Menu {
       this.rl.close();
       process.exit(0);
     }
-    // Cualquier otra tecla vuelve al menú (el bucle de showExamples lo maneja)
   }
 }

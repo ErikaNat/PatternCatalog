@@ -1,6 +1,5 @@
 // src/patterns/comportamiento/state/session.state.ts
 
-// ── Interfaz de estado ────────────────────────────────────────────────────────
 interface SessionState {
   login(user: string, password: string): void;
   logout(): void;
@@ -9,14 +8,13 @@ interface SessionState {
   readonly stateName: string;
 }
 
-// ── Contexto ──────────────────────────────────────────────────────────────────
 class UserSession {
   private state: SessionState;
   private currentUser: string | null = null;
 
   constructor() {
     this.state = new AnonymousState(this);
-    console.log(`[SESSION] 🌐 Sesión creada. Estado inicial: ${this.state.stateName}`);
+    console.log(`[SESSION]  Sesión creada. Estado inicial: ${this.state.stateName}`);
   }
 
   setState(state: SessionState): void {
@@ -34,7 +32,6 @@ class UserSession {
   expireSession(): void                       { this.state.expireSession(); }
 }
 
-// ── Estados concretos ─────────────────────────────────────────────────────────
 class AnonymousState implements SessionState {
   readonly stateName = 'Anónimo';
   constructor(private readonly session: UserSession) {}
@@ -114,7 +111,6 @@ class ExpiredState implements SessionState {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       STATE — User Session                    ');
 console.log('══════════════════════════════════════════════\n');

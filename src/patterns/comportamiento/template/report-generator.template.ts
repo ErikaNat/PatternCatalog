@@ -1,8 +1,6 @@
 // src/patterns/comportamiento/template/report-generator.template.ts
 
-// ── Clase abstracta con el Template Method ────────────────────────────────────
 abstract class ReportGenerator {
-  // Template Method — define el esqueleto del algoritmo
   generate(): void {
     console.log(`\n[TEMPLATE]    Iniciando generación: ${this.reportName()}`);
     const raw       = this.fetchData();
@@ -17,14 +15,12 @@ abstract class ReportGenerator {
   protected abstract processData(data: unknown[]): unknown;
   protected abstract formatOutput(data: unknown): string;
 
-  // Paso concreto compartido por todas las subclases
   protected saveReport(content: string): void {
     console.log(`  [SAVE]    Guardando reporte en /reports/${this.reportName().replace(/ /g, '_')}.pdf`);
     console.log(`  [SAVE]    ${content.length} bytes escritos`);
   }
 }
 
-// ── Subclase 1: Sales Report ──────────────────────────────────────────────────
 interface SaleRecord { product: string; quantity: number; price: number; }
 
 class SalesReportGenerator extends ReportGenerator {
@@ -55,7 +51,6 @@ class SalesReportGenerator extends ReportGenerator {
   }
 }
 
-// ── Subclase 2: Inventory Report ──────────────────────────────────────────────
 interface StockRecord { sku: string; name: string; stock: number; minStock: number; }
 
 class InventoryReportGenerator extends ReportGenerator {
@@ -85,7 +80,6 @@ class InventoryReportGenerator extends ReportGenerator {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       TEMPLATE METHOD — Report Generator      ');
 console.log('══════════════════════════════════════════════');

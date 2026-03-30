@@ -1,12 +1,10 @@
 // src/patterns/comportamiento/strategy/discount.strategy.ts
 
-// ── Interfaz de estrategia ────────────────────────────────────────────────────
 interface DiscountStrategy {
   readonly name: string;
   calculate(price: number, quantity: number): number;
 }
 
-// ── Estrategias concretas ─────────────────────────────────────────────────────
 class NoDiscount implements DiscountStrategy {
   readonly name = 'Sin descuento';
   calculate(price: number, quantity: number): number {
@@ -45,7 +43,6 @@ class VipDiscount implements DiscountStrategy {
   }
 }
 
-// ── Contexto: ShoppingCart ────────────────────────────────────────────────────
 class ShoppingCart {
   private strategy: DiscountStrategy = new NoDiscount();
 
@@ -66,7 +63,6 @@ class ShoppingCart {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       STRATEGY — Discount Strategies          ');
 console.log('══════════════════════════════════════════════\n');

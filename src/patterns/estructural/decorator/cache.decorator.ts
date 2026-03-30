@@ -1,17 +1,14 @@
 // src/patterns/estructural/decorator/cache.decorator.ts
 
-// ── Interfaz base ─────────────────────────────────────────────────────────────
 interface UserService {
   findUser(id: string): { id: string; name: string; email: string } | null;
 }
 
-// ── Implementación real con delay simulado ────────────────────────────────────
 class RealUserService implements UserService {
   private callCount = 0;
 
   findUser(id: string): { id: string; name: string; email: string } | null {
     this.callCount++;
-    // Simula latencia de red/BD (síncrono para demostración)
     const start = Date.now();
     while (Date.now() - start < 20) {}
 
@@ -27,7 +24,6 @@ class RealUserService implements UserService {
   getCallCount(): number { return this.callCount; }
 }
 
-// ── Decorator: Cache con TTL ──────────────────────────────────────────────────
 interface CacheEntry {
   value: { id: string; name: string; email: string } | null;
   expiresAt: number;
@@ -68,7 +64,6 @@ class CachedUserService implements UserService {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('       DECORATOR — Cache sobre UserService  ');
 console.log('═══════════════════════════════════════════\n');

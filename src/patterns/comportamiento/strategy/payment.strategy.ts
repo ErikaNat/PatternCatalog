@@ -1,6 +1,5 @@
 // src/patterns/comportamiento/strategy/payment.strategy.ts
 
-// ── Interfaz de estrategia ────────────────────────────────────────────────────
 interface PaymentDetails {
   [key: string]: string | number;
 }
@@ -16,7 +15,6 @@ interface PaymentStrategy {
   pay(amount: number, details: PaymentDetails): PaymentResult;
 }
 
-// ── Estrategias concretas ─────────────────────────────────────────────────────
 class CreditCardPayment implements PaymentStrategy {
   readonly name = 'Tarjeta de crédito';
 
@@ -59,7 +57,6 @@ class CryptoPayment implements PaymentStrategy {
   }
 }
 
-// ── Contexto: PaymentProcessor ────────────────────────────────────────────────
 class PaymentProcessor {
   private strategy: PaymentStrategy | null = null;
 
@@ -78,7 +75,6 @@ class PaymentProcessor {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       STRATEGY — Payment Strategies           ');
 console.log('══════════════════════════════════════════════\n');

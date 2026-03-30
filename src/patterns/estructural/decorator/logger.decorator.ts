@@ -1,15 +1,12 @@
 // src/patterns/estructural/decorator/logger.decorator.ts
 
-// ── Interfaz base ─────────────────────────────────────────────────────────────
 interface DataService {
   getData(id: string): string;
   saveData(id: string, data: string): void;
 }
 
-// ── Implementación real ───────────────────────────────────────────────────────
 class RealDataService implements DataService {
   getData(id: string): string {
-    // Simula latencia de BD
     const start = Date.now();
     while (Date.now() - start < 10) {} // 10ms
     return `{ "id": "${id}", "value": "datos_reales_${id}", "ts": ${Date.now()} }`;
@@ -18,11 +15,9 @@ class RealDataService implements DataService {
   saveData(id: string, data: string): void {
     const start = Date.now();
     while (Date.now() - start < 5) {}
-    // Simula persistencia exitosa
   }
 }
 
-// ── Decorator: Logger ─────────────────────────────────────────────────────────
 class LoggedDataService implements DataService {
   constructor(private readonly wrapped: DataService) {}
 
@@ -45,7 +40,6 @@ class LoggedDataService implements DataService {
   }
 }
 
-// ── Decorator: Cache ──────────────────────────────────────────────────────────
 class CachedDataService implements DataService {
   private cache: Map<string, string> = new Map();
 
@@ -69,12 +63,10 @@ class CachedDataService implements DataService {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('   DECORATOR — Logger + Cache sobre DataService');
 console.log('══════════════════════════════════════════════\n');
 
-// Apilado: Cache → Logger → Real
 const service: DataService = new CachedDataService(
   new LoggedDataService(
     new RealDataService()

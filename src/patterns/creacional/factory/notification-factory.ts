@@ -44,7 +44,6 @@ class NotifierFactory {
   }
 }
 
-// ─── Demo ────────────────────────────────────────────────────────────────────
 console.log('════════════════════════════════════════════');
 console.log('     FACTORY METHOD — Notification Factory   ');
 console.log('════════════════════════════════════════════\n');
@@ -61,7 +60,6 @@ for (const channel of channels) {
   console.log();
 }
 
-// Caso de error
 console.log('[TEST] Probando canal inválido...');
 try {
   NotifierFactory.create('telegram' as NotifierType);

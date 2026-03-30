@@ -5,7 +5,6 @@ import { PatternRepositoryPort } from '../domain/PatternRepositoryPort';
 
 export class InMemoryPatternRepository implements PatternRepositoryPort {
   private readonly patterns: Pattern[] = [
-    // ─── CREACIONALES ────────────────────────────────────────────────────────
     {
       id: 'singleton',
       name: 'Singleton',
@@ -69,7 +68,6 @@ export class InMemoryPatternRepository implements PatternRepositoryPort {
         },
       ],
     },
-    // ─── ESTRUCTURALES ───────────────────────────────────────────────────────
     {
       id: 'adapter',
       name: 'Adapter',
@@ -154,7 +152,6 @@ export class InMemoryPatternRepository implements PatternRepositoryPort {
         },
       ],
     },
-    // ─── COMPORTAMIENTO ──────────────────────────────────────────────────────
     {
       id: 'chain',
       name: 'Chain of Responsibility',

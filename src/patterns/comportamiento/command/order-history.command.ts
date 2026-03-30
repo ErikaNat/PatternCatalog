@@ -1,13 +1,11 @@
 // src/patterns/comportamiento/command/order-history.command.ts
 
-// ── Interfaz Command ──────────────────────────────────────────────────────────
 interface Command {
   execute(): void;
   undo(): void;
   readonly description: string;
 }
 
-// ── Receptor: OrderStore ──────────────────────────────────────────────────────
 interface SimpleOrder {
   id: string;
   product: string;
@@ -46,7 +44,6 @@ class OrderStore {
   }
 }
 
-// ── Comandos concretos ────────────────────────────────────────────────────────
 class CreateOrderCommand implements Command {
   readonly description: string;
   constructor(private readonly store: OrderStore, private readonly order: SimpleOrder) {
@@ -112,7 +109,6 @@ class UpdateStatusCommand implements Command {
   }
 }
 
-// ── Historial de comandos ─────────────────────────────────────────────────────
 class OrderCommandHistory {
   private history: Command[] = [];
   private undone:  Command[] = [];
@@ -125,20 +121,19 @@ class OrderCommandHistory {
 
   undo(): void {
     const cmd = this.history.pop();
-    if (!cmd) { console.log('  [HISTORY] ⚠️  Nada que deshacer'); return; }
+    if (!cmd) { console.log('  [HISTORY] ️  Nada que deshacer'); return; }
     cmd.undo();
     this.undone.push(cmd);
   }
 
   redo(): void {
     const cmd = this.undone.pop();
-    if (!cmd) { console.log('  [HISTORY] ⚠️  Nada que rehacer'); return; }
+    if (!cmd) { console.log('  [HISTORY] ️  Nada que rehacer'); return; }
     cmd.execute();
     this.history.push(cmd);
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       COMMAND — Order History                 ');
 console.log('══════════════════════════════════════════════\n');

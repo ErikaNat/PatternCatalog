@@ -1,12 +1,9 @@
 // src/patterns/estructural/adapter/google-oauth.adapter.ts
-// Sirve para hacer compatible un sistema viejo con el codigo nuevo 
 
-// ── Interfaz estándar que el sistema espera ───────────────────────────────────
 interface OAuthAuthService {
   authenticate(user: string, credential: string): { success: boolean; message: string };
 }
 
-// ── Cliente externo de Google (interfaz incompatible) ─────────────────────────
 interface GoogleTokenResult {
   email: string;
   valid: boolean;
@@ -15,7 +12,6 @@ interface GoogleTokenResult {
 
 class GoogleOAuthClient {
   verifyGoogleToken(token: string, clientId: string): GoogleTokenResult {
-    // Simulación: tokens que empiezan con "valid_" son aceptados
     const isValid = token.startsWith('valid_');
     return {
       email: isValid ? 'usuario@gmail.com' : '',
@@ -27,7 +23,6 @@ class GoogleOAuthClient {
   }
 }
 
-// ── Adapter: adapta GoogleOAuthClient a la interfaz OAuthAuthService ─────────────
 class GoogleOAuthAdapter implements OAuthAuthService {
   private readonly client: GoogleOAuthClient;
   private readonly clientId: string;
@@ -55,7 +50,6 @@ class GoogleOAuthAdapter implements OAuthAuthService {
   }
 }
 
-// ─── Demo ────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('       ADAPTER — Google OAuth Adapter       ');
 console.log('═══════════════════════════════════════════\n');
@@ -63,19 +57,16 @@ console.log('══════════════════════�
 const adapter: OAuthAuthService = new GoogleOAuthAdapter('mi-app-client-id-123');
 console.log();
 
-// Caso exitoso
 console.log('── Caso 1: Token válido ──────────────────────');
 const ok = adapter.authenticate('usuario@gmail.com', 'valid_google_token_abc');
 console.log(ok.success ? `   ${ok.message}` : `   ${ok.message}`);
 console.log();
 
-// Caso fallido: token inválido
 console.log('── Caso 2: Token inválido ────────────────────');
 const fail1 = adapter.authenticate('usuario@gmail.com', 'expired_token_xyz');
 console.log(fail1.success ? `   ${fail1.message}` : `   ${fail1.message}`);
 console.log();
 
-// Caso fallido: email no coincide
 console.log('── Caso 3: Email no coincide ─────────────────');
 const fail2 = adapter.authenticate('otro@gmail.com', 'valid_google_token_abc');
 console.log(fail2.success ? `   ${fail2.message}` : `   ${fail2.message}`);

@@ -1,6 +1,5 @@
 // src/patterns/estructural/facade/security.facade.ts
 
-// ── Subsistemas internos (complejos e independientes) ─────────────────────────
 
 class AuthService {
   validate(user: string, password: string): boolean {
@@ -38,7 +37,6 @@ class SessionService {
   }
 }
 
-// ── Facade: interfaz simplificada sobre los 4 subsistemas ────────────────────
 
 class SecurityFacade {
   private authService      = new AuthService();
@@ -49,7 +47,6 @@ class SecurityFacade {
   login(user: string, password: string): { token: string | null; permissions: string[] } {
     console.log(`[FACADE]    Iniciando login para "${user}"...`);
 
-    // Paso 1: validar credenciales
     const valid = this.authService.validate(user, password);
     if (!valid) {
       this.auditService.log('LOGIN_FAILED', user, { reason: 'Credenciales inválidas' });
@@ -57,13 +54,10 @@ class SecurityFacade {
       return { token: null, permissions: [] };
     }
 
-    // Paso 2: cargar permisos
     const permissions = this.permissionsService.loadPermissions(user);
 
-    // Paso 3: registrar auditoría
     this.auditService.log('LOGIN_SUCCESS', user, { permissions });
 
-    // Paso 4: crear sesión
     const token = this.sessionService.createSession(user, permissions);
 
     console.log(`[FACADE]    Login exitoso. Token entregado.\n`);
@@ -78,26 +72,22 @@ class SecurityFacade {
   }
 }
 
-// ─── Demo ────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('          FACADE — Security Facade          ');
 console.log('═══════════════════════════════════════════\n');
 
 const security = new SecurityFacade();
 
-// Caso exitoso: admin
 console.log('── Caso 1: Login exitoso (admin) ─────────────────');
 const { token, permissions: adminPerms } = security.login('admin@empresa.com', 'securePass');
 console.log(`   Permisos obtenidos: [${adminPerms.join(', ')}]`);
 console.log(`   Token: ${token}`);
 console.log();
 
-// Logout
 if (token) {
   security.logout('admin@empresa.com', token);
 }
 
-// Caso fallido: contraseña corta
 console.log('── Caso 2: Login fallido (contraseña inválida) ────');
 const { token: failToken } = security.login('user@empresa.com', '123');
 console.log(`   Token recibido: ${failToken}`);

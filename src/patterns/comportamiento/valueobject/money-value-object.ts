@@ -1,6 +1,5 @@
 // src/patterns/comportamiento/valueobject/money-value-object.ts
 
-// ── Value Object: Money ───────────────────────────────────────────────────────
 class Money {
   private readonly _amount: number;
   private readonly _currency: string;
@@ -47,7 +46,6 @@ class Money {
   }
 }
 
-// ── Entidad: Invoice (usa Money) ──────────────────────────────────────────────
 interface InvoiceItem {
   description: string;
   unitPrice: Money;
@@ -92,7 +90,6 @@ class Invoice {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       VALUE OBJECT — Money                    ');
 console.log('══════════════════════════════════════════════\n');

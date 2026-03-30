@@ -2,7 +2,6 @@
 
 type ObserverFn = (data: unknown) => void;
 
-// ── EventEmitter (sujeto observable) ─────────────────────────────────────────
 class EventEmitter {
   private listeners: Map<string, ObserverFn[]> = new Map();
 
@@ -26,7 +25,6 @@ class EventEmitter {
   }
 }
 
-// ── Observers concretos ───────────────────────────────────────────────────────
 class AuditObserver {
   handle = (data: unknown): void => {
     console.log(`  [AUDIT]    Registro de auditoría: ${JSON.stringify(data)}`);
@@ -51,7 +49,6 @@ class MetricsObserver {
   };
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('       OBSERVER — Event System                 ');
 console.log('══════════════════════════════════════════════\n');
@@ -61,7 +58,6 @@ const audit     = new AuditObserver();
 const email     = new EmailObserver();
 const metrics   = new MetricsObserver();
 
-// Suscripciones
 emitter.on('user.login',  audit.handle);
 emitter.on('user.login',  email.handle);
 emitter.on('user.login',  metrics.handle);
@@ -69,21 +65,17 @@ emitter.on('user.logout', audit.handle);
 emitter.on('user.logout', metrics.handle);
 console.log();
 
-// Emisión evento login
 console.log('── Evento: user.login ────────────────────────────────');
 emitter.emit('user.login', { user: 'alice@empresa.com', action: 'login', ip: '192.168.1.1' });
 console.log();
 
-// Emisión evento logout
 console.log('── Evento: user.logout ───────────────────────────────');
 emitter.emit('user.logout', { user: 'alice@empresa.com', action: 'logout' });
 console.log();
 
-// Desuscripción del EmailObserver del login
 console.log('── Desuscribiendo EmailObserver de "user.login" ──────');
 emitter.off('user.login', email.handle);
 console.log();
 
-// Nuevo login: email ya no debe recibir notificación
 console.log('── Evento: user.login (tras desuscripción de email) ──');
 emitter.emit('user.login', { user: 'bob@empresa.com', action: 'login', ip: '10.0.0.2' });

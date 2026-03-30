@@ -38,7 +38,6 @@ class AppConfig {
   }
 }
 
-// ─── Demo ────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('        SINGLETON — App Configuration       ');
 console.log('═══════════════════════════════════════════\n');
@@ -46,7 +45,7 @@ console.log('══════════════════════�
 const configA = AppConfig.getInstance();
 const configB = AppConfig.getInstance();
 
-console.log(`✓ Una sola instancia: ${configA === configB}\n`);
+console.log(` Una sola instancia: ${configA === configB}\n`);
 
 console.log('Configuración inicial:');
 console.log(configA.getAll());

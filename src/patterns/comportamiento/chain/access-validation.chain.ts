@@ -8,7 +8,6 @@ interface AccessRequest {
   allowedResources: string[];
 }
 
-// ── Handler abstracto ─────────────────────────────────────────────────────────
 abstract class AccessHandler {
   private next: AccessHandler | null = null;
 
@@ -26,7 +25,6 @@ abstract class AccessHandler {
   abstract handle(request: AccessRequest): boolean;
 }
 
-// ── Handlers concretos ────────────────────────────────────────────────────────
 class AuthHandler extends AccessHandler {
   handle(request: AccessRequest): boolean {
     console.log(`[AUTH-HANDLER]    Verificando token de "${request.user}"...`);
@@ -34,7 +32,7 @@ class AuthHandler extends AccessHandler {
       console.log(`[AUTH-HANDLER]    DENEGADO — token ausente`);
       return false;
     }
-    console.log(`[AUTH-HANDLER] ✓ Token válido`);
+    console.log(`[AUTH-HANDLER]  Token válido`);
     return this.passToNext(request);
   }
 }
@@ -48,7 +46,7 @@ class RoleHandler extends AccessHandler {
       console.log(`[ROLE-HANDLER]    DENEGADO — rol insuficiente`);
       return false;
     }
-    console.log(`[ROLE-HANDLER] ✓ Rol correcto`);
+    console.log(`[ROLE-HANDLER]  Rol correcto`);
     return this.passToNext(request);
   }
 }
@@ -60,17 +58,15 @@ class ResourceHandler extends AccessHandler {
       console.log(`[RESOURCE-HANDLER]    DENEGADO — recurso no permitido`);
       return false;
     }
-    console.log(`[RESOURCE-HANDLER] ✓ Recurso permitido`);
+    console.log(`[RESOURCE-HANDLER]  Recurso permitido`);
     return this.passToNext(request);
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('══════════════════════════════════════════════');
 console.log('   CHAIN — Access Validation Chain             ');
 console.log('══════════════════════════════════════════════\n');
 
-// Construir cadena: Auth → Role → Resource
 const authHandler     = new AuthHandler();
 const roleHandler     = new RoleHandler('ADMIN');
 const resourceHandler = new ResourceHandler();

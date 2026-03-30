@@ -2,15 +2,12 @@
 
 type ReportType = 'sales' | 'inventory' | 'financial';
 
-// ── Interfaz ──────────────────────────────────────────────────────────────────
 interface ReportService {
   generate(type: ReportType): string;
 }
 
-// ── Servicio real (costoso de instanciar) ─────────────────────────────────────
 class HeavyReportService implements ReportService {
   constructor() {
-    // Simula carga costosa: conexiones a BD, carga de templates, etc.
     console.log('[HEAVY-SVC]     Iniciando carga pesada...');
     const start = Date.now();
     while (Date.now() - start < 50) {} // Simula 50ms de carga
@@ -27,7 +24,6 @@ class HeavyReportService implements ReportService {
   }
 }
 
-// ── Proxy de lazy loading ─────────────────────────────────────────────────────
 class LazyReportProxy implements ReportService {
   private realService: HeavyReportService | null = null;
 
@@ -46,7 +42,6 @@ class LazyReportProxy implements ReportService {
   }
 }
 
-// ─── Demo ─────────────────────────────────────────────────────────────────────
 console.log('═══════════════════════════════════════════');
 console.log('       PROXY — Lazy Loading Proxy           ');
 console.log('═══════════════════════════════════════════\n');
