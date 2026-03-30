@@ -1,0 +1,14 @@
+{
+  "name": "patterns-catalog",
+  "version": "1.0.0",
+  "description": "Catálogo interactivo de los 15 patrones de diseño más importantes",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node --watch src/index.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
